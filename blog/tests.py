@@ -9,6 +9,8 @@ class TestView(TestCase):
         self.client = Client()
         self.user_trump = User.objects.create_user(username='trump', password='somepassword')
         self.user_obama = User.objects.create_user(username='obama', password='somepassword')
+        self.user_obama.is_staff = True
+        self.user_obama.save()
 
         self.category_programming = Category.objects.create(name='programming', slug='programming')
         self.category_music = Category.objects.create(name='music', slug='music')
@@ -41,13 +43,13 @@ class TestView(TestCase):
         self.post_003.tags.add(self.tag_python)
 
 
-
     def category_card_test(self, soup):
         categories_card = soup.find('div', id='categories-card')
         self.assertIn('Categories', categories_card.text)
         self.assertIn(f'{self.category_programming} ({self.category_programming.post_set.count()})', categories_card.text)
         self.assertIn(f'{self.category_music} ({self.category_music.post_set.count()})', categories_card.text)
         self.assertIn(f'미분류 (1)', categories_card.text)
+
 
     def navbar_test(self, soup):
         navbar = soup.nav
@@ -67,7 +69,6 @@ class TestView(TestCase):
 
         about_me_btn = navbar.find('a', text='About Me')
         self.assertEqual(about_me_btn.attrs['href'], '/about_me/')
-
 
 
     def test_post_list(self):
@@ -170,6 +171,8 @@ class TestView(TestCase):
         self.assertNotIn(self.post_003.title, main_area.text)
 
 
+
+
     def test_tag_page(self):
         response = self.client.get(self.tag_hello.get_absolute_url())
         self.assertEqual(response.status_code, 200)
@@ -193,8 +196,13 @@ class TestView(TestCase):
         response = self.client.get('/blog/create_post/')
         self.assertNotEqual(response.status_code, 200)
 
-        # 로그인을 한다.
+        # staff가 아닌 trump가 로그인 한다.
         self.client.login(username='trump', password='somepassword')
+        response = self.client.get('/blog/create_post/')
+        self.assertNotEqual(response.status_code, 200)
+
+        # staff인 obama가 로그인을 한다.
+        self.client.login(username='obama', password='somepassword')
 
         response = self.client.get('/blog/create_post/')
         self.assertEqual(response.status_code, 200)
@@ -207,14 +215,14 @@ class TestView(TestCase):
         self.client.post(
             '/blog/create_post/',
             {
-                'title' : 'Post Form 만들기',
-                'content' : "Post Form 페이지를 만듭시다."
+                'title': 'Post Form 만들기',
+                'content': "Post Form 페이지를 만듭시다."
             }
         )
         self.assertEqual(Post.objects.count(), 4)
         last_post = Post.objects.last()
         self.assertEqual(last_post.title, "Post Form 만들기")
-        self.assertEqual(last_post.author.username, 'trump')
+        self.assertEqual(last_post.author.username, 'obama')
 
 
 
