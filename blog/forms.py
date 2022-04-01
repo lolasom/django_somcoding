@@ -6,4 +6,3 @@ class CommentForm(forms.ModelForm):
         model = Comment
         # ordering = '-pk'  # 여기도 아니라면 도대체 어디인가...
         fields = ('content',)
-        
