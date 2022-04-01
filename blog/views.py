@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import get_object_or_404
 from .models import Post, Category, Tag
+from .forms import CommentForm
 from django.core.exceptions import PermissionDenied
 from django.utils.text import slugify
+
 
 
 class PostList(ListView):
@@ -24,7 +27,9 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data()
         context['categories'] = Category.objects.all()
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        context['comment_form'] = CommentForm
         return context
+
 
 
 class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -57,6 +62,7 @@ class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
             return response
         else:
             return redirect('/blog/')
+
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
@@ -122,6 +128,7 @@ def category_page(request, slug):
         }
     )
 
+
 def tag_page(request, slug):
     tag = Tag.objects.get(slug=slug)
     post_list = tag.post_set.all()
@@ -136,3 +143,25 @@ def tag_page(request, slug):
             'no_category_post_count': Post.objects.filter(category=None).count(),
         }
     )
+
+
+def new_comment(request, pk):
+
+    if request.user.is_authenticated:
+        post = get_object_or_404(Post, pk=pk)
+
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+            if comment_form.is_valid():  # 이 폼이 유효하게 작성 되었다면
+                comment = comment_form.save(commit=False)  # 해당내용으로 새로운 레코드를 만들어 데이터베이스에 저장하는데, 바로 저장하는 기능을 잠시 미룸
+                comment.post = post  # pk로 가져온 포스트로 채우고
+                comment.author = request.user  # 로그인한 사용자 정보로 채움
+                comment.save()  # 이 작업이 끝나야 비로소 저장!
+                return redirect(comment.get_absolute_url())
+
+
+        else :
+            return redirect(post.get_absolute_url())
+
+    else:
+        raise PermissionDenied
