@@ -1,21 +1,176 @@
-<! DOCTYPE html>
+
+<!DOCTYPE html>
+{% load static %}
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>개발자 달타냥입니다!</title>
+    <title>Somcoding에 오신것을 환영합니다.</title>
+
+    <link rel="stylesheet" href="{% static 'blog/bootstrap/bootstrap.min.css' %}" media="screen">
+    <link rel="stylesheet" href="{% static 'single_pages/css/about_me.css' %}" media="screen">
+    <script src="https://kit.fontawesome.com/2f1ca5a147.js" crossorigin="anonymous"></script>
 </head>
 
 
 <body>
-<nav>
-    <a href="/blog">Blog</a>
-    <a href="/about_me/">About me</a>
-</nav>
-    <hr/>
-    <h1>안녕하세요. 달타냥입니다.</h1>
-    <h2>이력</h2>
-    <h2>Portfolio</h2>
-    <h3>아직 공사중입니다..</h3>
-</body>
 
+{% include 'blog/navbar.html' %}
+
+<section>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1>안녕하세요 somcoding입니다.</h1>
+                <br>
+                <h5>프로그래밍 공부 기록 및 정보 공유를 위한 홈페이지 입니다.</h5>
+            </div>
+
+            <div class="col-lg-4">
+                <img class="img_fluid" height="350" src="{% static 'single_pages/images/메타몽.jpg' %}">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="bg-light margin-for-footer">
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-12">
+                <h1>PROFOLIO</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="card" data-toggle="modal" data-target="#python_6hours">
+                    <img class="card-img-top" src="{% static 'single_pages/images/python_6hours.png' %}">
+                    <div class="card-body">
+                        <h5 class="card-little">"파이썬 무료 강의 (기본편) - 6시간 뒤면 나도 개발자" 수강</h5>
+                        <p>파이썬 기초문법에 대한 인프런 동영상 강의를 수강하였습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card" data-toggle="modal" data-target="#python_basic">
+                    <img class="card-img-top" src="{% static 'single_pages/images/python_basic.png' %}">
+                    <div class="card-body">
+                        <h5 class="card-little">"파이썬 기초부터 실무까지" 수강</h5>
+                        <p>객체 지향 프로그래밍에 대한 인프런 동여상 강의를 수강하였습니다.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="card" data-toggle="modal" data-target="#big_data_AI">
+                    <img class="card-img-top" src="{% static 'single_pages/images/big_data_AI.png' %}">
+                    <div class="card-body">
+                        <h5 class="card-little">"프로젝트 기반 AI빅데이터 융합인재 양성 과정" 수강중</h5>
+                        <p>4차산업 대비 및 디지털 핵심 산업분야의 활성화를 위한 AI빅데이터 전문인력 양성, 부산지역 고급 빅데이터 분석인력 양성 및 교육기반 마련이 목표인 교육을 수강 중입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="python_6hours" tabindex="-1" role="dialog" aria-labelledby="python_6hoursModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="6hoursModalLabel">"파이썬 무료 강의 (기본편) - 6시간 뒤면 나도 개발자" 수강</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+                <div class="container my-3">
+                  <div class="row">
+                      <div class="col-lg-7">
+                          <img class="img-fluid" width="500" src="{% static 'single_pages/images/python_6hours.png' %}">
+                      </div>
+                      <div class="col-lg-5">
+                          <p>파이썬 기초문법에 대한 인프런 동영상 강의를 수강하였습니다.</p>
+                      </div>
+                  </div>
+                </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="python_basic" tabindex="-1" role="dialog" aria-labelledby="python_basicModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="basicModalLabel">"파이썬 기초부터 실무까지" 수강</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+                <div class="container my-3">
+                      <div class="row">
+                          <div class="col-lg-7">
+                              <img class="img-fluid" width="500" src="{% static 'single_pages/images/python_basic.png' %}">
+                          </div>
+                          <div class="col-lg-5">
+                              <p>객체 지향 프로그래밍에 대한 인프런 동여상 강의를 수강하였습니다.</p>
+                          </div>
+                      </div>
+                </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="big_data_AI" tabindex="-1" role="dialog" aria-labelledby="big_data_AIModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="AIModalLabel">"프로젝트 기반 AI빅데이터 융합인재 양성 과정" 수강중</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+                <div class="container my-3">
+                  <div class="row">
+                      <div class="col-lg-7">
+                          <img class="img-fluid" width="500" src="{% static 'single_pages/images/big_data_AI.png' %}">
+                      </div>
+                      <div class="col-lg-5">
+                          <p>4차산업 대비 및 디지털 핵심 산업분야의 활성화를 위한 AI빅데이터 전문인력 양성, 부산지역 고급 빅데이터 분석인력 양성 및 교육기반 마련이 목표인 교육을 수강 중입니다.</p>
+                      </div>
+                  </div>
+                </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="fixed-bottom">
+    {% include 'blog/footer.html' %}
+</div>
+
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+
+</body>
 </html>
